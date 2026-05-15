@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('focus_sessions', function (Blueprint $table) {
+        Schema::create('kategori', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_kategori');
+            $table->string('warna');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('focus_sessions');
+        Schema::dropIfExists('kategori');
     }
 };

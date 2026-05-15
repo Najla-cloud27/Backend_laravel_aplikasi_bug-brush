@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FocusSession extends Model
+class Tugas extends Model
 {
     //
 }
