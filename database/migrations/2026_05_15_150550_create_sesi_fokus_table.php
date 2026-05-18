@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('sesi_fokus', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tugas_id')
+                    ->constrained('tugas')
+                    ->onDelete('cascade');
+
+            $table->timestamp('waktu_mulai');
+            $table->timestamp('waktu_selesai')->nullable();
+            $table->string('status');
             $table->timestamps();
-        });
+            });
     }
 
     /**

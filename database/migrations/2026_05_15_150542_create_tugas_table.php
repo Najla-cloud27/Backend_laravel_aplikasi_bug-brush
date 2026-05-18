@@ -13,20 +13,17 @@ return new class extends Migration
     {
         Schema::create('tugas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('kategori_id')
                 ->constrained('kategori')
                 ->onDelete('cascade');
             $table->string('judul');
-            $table->text('deskripsi')->nullable();
-            $table->date('deadline')->nullable();
-            $table->enum('status', [
-                'belum',
-                'proses',
-                'selesai'
-            ])->default('belum');
-                    $table->timestamps();
-                });
+            $table->string('status')->default('belum');
+            $table->timestamp('tenggat_waktu');
+            $table->boolean('pengulangan')->default(false);
+            $table->string('hari_kustom')->nullable();
+            $table->integer('durasi_menit');
+            $table->timestamps();
+});
     }
 
     /**

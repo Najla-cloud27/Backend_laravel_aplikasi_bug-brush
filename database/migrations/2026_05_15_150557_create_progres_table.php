@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('progres', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->integer('total_fokus');
+            $table->integer('total_tugas_selesai');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }

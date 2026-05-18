@@ -47,4 +47,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // RELATIONSHIP KE PROGRES
+    public function progres()
+    {
+        return $this->hasMany(Progres::class);
+    }
 }

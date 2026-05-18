@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('kutipan', function (Blueprint $table) {
             $table->id();
+            $table->text('isi_kutipan');
+            $table->string('penulis');
             $table->timestamps();
         });
     }
