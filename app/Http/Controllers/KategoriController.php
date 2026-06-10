@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-     // tampil semua kategori
     public function index()
     {
-        return response()->json(
-            Kategori::all()
-        );
+        $kategori = Kategori::where('user_id', request()->user()->id)->paginate(15);
+
+        return response()->json($kategori);
     }
 
-    // tambah kategori
     public function store(Request $request)
     {
         $request->validate([
@@ -24,6 +22,7 @@ class KategoriController extends Controller
         ]);
 
         $kategori = Kategori::create([
+            'user_id' => $request->user()->id,
             'nama_kategori' => $request->nama_kategori,
             'warna' => $request->warna,
         ]);
@@ -34,18 +33,16 @@ class KategoriController extends Controller
         ]);
     }
 
-    // tampil satu kategori
     public function show(string $id)
     {
-        return response()->json(
-            Kategori::findOrFail($id)
-        );
+        $kategori = Kategori::where('user_id', request()->user()->id)->findOrFail($id);
+
+        return response()->json($kategori);
     }
 
-    // update kategori
     public function update(Request $request, string $id)
     {
-        $kategori = Kategori::findOrFail($id);
+        $kategori = Kategori::where('user_id', $request->user()->id)->findOrFail($id);
 
         $kategori->update([
             'nama_kategori' => $request->nama_kategori,
@@ -58,10 +55,9 @@ class KategoriController extends Controller
         ]);
     }
 
-    // hapus kategori
     public function destroy(string $id)
     {
-        $kategori = Kategori::findOrFail($id);
+        $kategori = Kategori::where('user_id', request()->user()->id)->findOrFail($id);
 
         $kategori->delete();
 

@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 
 class TugasController extends Controller
 {
-     // tampil semua tugas
     public function index()
     {
-        $tugas = Tugas::with('kategori')->get();
+        $tugas = Tugas::with('kategori')
+            ->where('user_id', request()->user()->id)
+            ->paginate(15);
 
         return response()->json($tugas);
     }
 
-    // tambah tugas
     public function store(Request $request)
     {
         $request->validate([
@@ -26,6 +26,7 @@ class TugasController extends Controller
         ]);
 
         $tugas = Tugas::create([
+            'user_id' => $request->user()->id,
             'kategori_id' => $request->kategori_id,
             'judul' => $request->judul,
             'status' => $request->status,
@@ -41,20 +42,20 @@ class TugasController extends Controller
         ]);
     }
 
-    // tampil detail tugas
     public function show(string $id)
     {
-        $tugas = Tugas::with('kategori')->findOrFail($id);
+        $tugas = Tugas::with('kategori')
+            ->where('user_id', request()->user()->id)
+            ->findOrFail($id);
 
         return response()->json($tugas);
     }
 
-    // update tugas
     public function update(Request $request, string $id)
     {
-        $tugas = Tugas::findOrFail($id);
+        $tugas = Tugas::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $tugas->update($request->all());
+        $tugas->update($request->only(['kategori_id', 'judul', 'status', 'tenggat_waktu', 'pengulangan', 'hari_kustom', 'durasi_menit']));
 
         return response()->json([
             'message' => 'Tugas berhasil diupdate',
@@ -62,10 +63,9 @@ class TugasController extends Controller
         ]);
     }
 
-    // hapus tugas
     public function destroy(string $id)
     {
-        $tugas = Tugas::findOrFail($id);
+        $tugas = Tugas::where('user_id', request()->user()->id)->findOrFail($id);
 
         $tugas->delete();
 

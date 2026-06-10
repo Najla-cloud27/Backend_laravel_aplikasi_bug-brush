@@ -9,6 +9,7 @@ class Tugas extends Model
     protected $table = 'tugas';
 
     protected $fillable = [
+        'user_id',
         'kategori_id',
         'judul',
         'status',
@@ -17,6 +18,11 @@ class Tugas extends Model
         'hari_kustom',
         'durasi_menit',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // relationship dengan kategori
     public function kategori()

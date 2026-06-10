@@ -7,15 +7,13 @@ use Illuminate\Http\Request;
 
 class KutipanController extends Controller
 {
-     // tampil semua kutipan
     public function index()
     {
-        $kutipan = Kutipan::all();
+        $kutipan = Kutipan::paginate(15);
 
         return response()->json($kutipan);
     }
 
-    // tambah kutipan
     public function store(Request $request)
     {
         $request->validate([
@@ -34,7 +32,6 @@ class KutipanController extends Controller
         ]);
     }
 
-    // detail kutipan
     public function show(string $id)
     {
         $kutipan = Kutipan::findOrFail($id);
@@ -42,12 +39,11 @@ class KutipanController extends Controller
         return response()->json($kutipan);
     }
 
-    // update kutipan
     public function update(Request $request, string $id)
     {
         $kutipan = Kutipan::findOrFail($id);
 
-        $kutipan->update($request->all());
+        $kutipan->update($request->only(['isi_kutipan', 'penulis']));
 
         return response()->json([
             'message' => 'Kutipan berhasil diupdate',
@@ -55,7 +51,6 @@ class KutipanController extends Controller
         ]);
     }
 
-    // hapus kutipan
     public function destroy(string $id)
     {
         $kutipan = Kutipan::findOrFail($id);

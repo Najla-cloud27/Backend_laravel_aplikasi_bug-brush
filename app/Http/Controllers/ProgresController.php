@@ -7,26 +7,25 @@ use Illuminate\Http\Request;
 
 class ProgresController extends Controller
 {
-    // tampil semua progres
     public function index()
     {
-        $progres = Progres::with('user')->get();
+        $progres = Progres::with('user')
+            ->where('user_id', request()->user()->id)
+            ->paginate(15);
 
         return response()->json($progres);
     }
 
-    // tambah progres
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'total_fokus' => 'required',
             'total_tugas_selesai' => 'required',
             'tanggal' => 'required',
         ]);
 
         $progres = Progres::create([
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
             'total_fokus' => $request->total_fokus,
             'total_tugas_selesai' => $request->total_tugas_selesai,
             'tanggal' => $request->tanggal,
@@ -38,20 +37,20 @@ class ProgresController extends Controller
         ]);
     }
 
-    // detail progres
     public function show(string $id)
     {
-        $progres = Progres::with('user')->findOrFail($id);
+        $progres = Progres::with('user')
+            ->where('user_id', request()->user()->id)
+            ->findOrFail($id);
 
         return response()->json($progres);
     }
 
-    // update progres
     public function update(Request $request, string $id)
     {
-        $progres = Progres::findOrFail($id);
+        $progres = Progres::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $progres->update($request->all());
+        $progres->update($request->only(['total_fokus', 'total_tugas_selesai', 'tanggal']));
 
         return response()->json([
             'message' => 'Progres berhasil diupdate',
@@ -59,10 +58,9 @@ class ProgresController extends Controller
         ]);
     }
 
-    // hapus progres
     public function destroy(string $id)
     {
-        $progres = Progres::findOrFail($id);
+        $progres = Progres::where('user_id', request()->user()->id)->findOrFail($id);
 
         $progres->delete();
 
@@ -70,5 +68,4 @@ class ProgresController extends Controller
             'message' => 'Progres berhasil dihapus'
         ]);
     }
-
 }

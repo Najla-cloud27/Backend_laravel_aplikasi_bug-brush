@@ -15,7 +15,6 @@ class Progres extends Model
         'tanggal',
     ];
 
-    // relasi ke user
     public function user()
     {
         return $this->belongsTo(User::class);
