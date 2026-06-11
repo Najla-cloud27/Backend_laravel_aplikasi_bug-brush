@@ -1213,9 +1213,9 @@
                 <span class="logo-text">KUSIN</span>
             </a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#/beranda" class="active" data-nav>Beranda</a></li>
-                <li><a href="#/beranda#fitur" data-nav>Fitur</a></li>
-                <li><a href="#/beranda#cara-kerja" data-nav>Cara Kerja</a></li>
+                <li><a href="#beranda" class="active" data-nav>Beranda</a></li>
+                <li><a href="#fitur" data-nav>Fitur</a></li>
+                <li><a href="#cara-kerja" data-nav>Cara Kerja</a></li>
             </ul>
 
             <a href="#" class="btn-download" id="btnDownload" download>Download App</a>
@@ -1328,9 +1328,9 @@
                         <div class="footer-col">
                             <h4>Navigasi</h4>
                             <ul>
-                                <li><a href="#/beranda">Beranda</a></li>
-                                <li><a href="#/beranda#fitur">Fitur</a></li>
-                                <li><a href="#/beranda#cara-kerja">Cara Kerja</a></li>
+                                <li><a href="#beranda">Beranda</a></li>
+                                <li><a href="#fitur">Fitur</a></li>
+                                <li><a href="#cara-kerja">Cara Kerja</a></li>
                             </ul>
                         </div>
                         <div class="footer-col">
@@ -1609,13 +1609,14 @@
             if (route === 'beranda') {
                 showPage('beranda');
                 document.title = 'Fokusin - Atur Waktu, Tingkatkan Fokus';
-                var scrollTarget = hash.split('#')[1];
-                if (scrollTarget && scrollTarget !== '/beranda') {
-                    setTimeout(function () {
-                        var el = document.getElementById(scrollTarget);
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                }
+            } else if (hash.startsWith('#') && !hash.startsWith('#/') && hash.length > 1) {
+                var sectionId = hash.substring(1);
+                showPage('beranda');
+                document.title = 'Fokusin - Atur Waktu, Tingkatkan Fokus';
+                setTimeout(function () {
+                    var el = document.getElementById(sectionId);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
             } else if (route === 'login' || route === 'register') {
                 if (isAuthenticated()) {
                     window.location.hash = '#/dashboard';
@@ -1835,12 +1836,17 @@
             initAuthForms();
             window.addEventListener('hashchange', handleRoute);
 
-            document.querySelectorAll('[data-nav]').forEach(function (link) {
-                link.addEventListener('click', function () {
+            document.querySelectorAll('.nav-links a[data-nav]').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var href = this.getAttribute('href');
+                    if (href && href.startsWith('#') && !href.startsWith('#/')) {
+                        e.preventDefault();
+                        window.location.hash = href;
+                    }
                     document.querySelectorAll('.nav-links a').forEach(function (l) {
                         l.classList.remove('active');
                     });
-                    link.classList.add('active');
+                    this.classList.add('active');
                 });
             });
         });
