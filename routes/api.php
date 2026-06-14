@@ -26,6 +26,7 @@ Route::get('/kutipan/{kutipan}', [KutipanController::class, 'show']);
 Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/user', [AuthController::class, 'showProfile']);
     Route::put('/user', [AuthController::class, 'updateProfile']);
+    Route::post('/user/update', [AuthController::class, 'updateProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('kategori', KategoriController::class);

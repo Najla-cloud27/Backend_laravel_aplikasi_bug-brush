@@ -74,16 +74,26 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
         $user = $request->user();
-        $user->update($request->only(['name']));
+        $data = $request->only(['name']);
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $data['avatar'] = $path;
+        }
+
+        $user->update($data);
+
+        $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : null;
 
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'avatar' => $user->avatar,
+            'avatar' => $avatarUrl,
         ]);
     }
 
