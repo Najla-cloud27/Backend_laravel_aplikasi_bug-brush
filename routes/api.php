@@ -18,14 +18,14 @@ Route::get('/login', function () {
 
 Route::get('/auth/google/redirect', [AuthController::class, 'googleRedirect'])->middleware('throttle:auth');
 Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->middleware('throttle:auth');
+Route::post('/auth/google', [AuthController::class, 'googleIdTokenLogin'])->middleware('throttle:auth');
 
 Route::get('/kutipan', [KutipanController::class, 'index']);
 Route::get('/kutipan/{kutipan}', [KutipanController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [AuthController::class, 'showProfile']);
+    Route::put('/user', [AuthController::class, 'updateProfile']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::apiResource('kategori', KategoriController::class);

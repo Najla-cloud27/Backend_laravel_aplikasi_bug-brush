@@ -55,7 +55,12 @@ class TugasController extends Controller
     {
         $tugas = Tugas::where('user_id', $request->user()->id)->findOrFail($id);
 
-        $tugas->update($request->only(['kategori_id', 'judul', 'status', 'tenggat_waktu', 'pengulangan', 'hari_kustom', 'durasi_menit']));
+        if ($request->has('status')) {
+            $request->validate(['status' => 'in:selesai,pending,belum']);
+        }
+
+        $data = $request->only(['kategori_id', 'judul', 'status', 'tenggat_waktu', 'pengulangan', 'hari_kustom', 'durasi_menit']);
+        $tugas->update($data);
 
         return response()->json([
             'message' => 'Tugas berhasil diupdate',

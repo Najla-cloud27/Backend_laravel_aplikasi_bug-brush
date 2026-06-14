@@ -58,6 +58,35 @@ class AuthController extends Controller
         ]);
     }
 
+    public function showProfile(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $user = $request->user();
+        $user->update($request->only(['name']));
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
@@ -75,6 +104,45 @@ class AuthController extends Controller
         $url = $provider->stateless()->redirect()->getTargetUrl();
 
         return response()->json(['url' => $url]);
+    }
+
+    public function googleIdTokenLogin(Request $request)
+    {
+        $request->validate([
+            'id_token' => 'required|string',
+        ]);
+
+        try {
+            $provider = Socialite::driver('google');
+            $socialiteUser = $provider->stateless()->userFromToken($request->id_token);
+
+            $user = User::where('email', $socialiteUser->getEmail())->first();
+
+            if (!$user) {
+                $user = User::create([
+                    'name' => $socialiteUser->getName(),
+                    'email' => $socialiteUser->getEmail(),
+                    'google_id' => $socialiteUser->getId(),
+                    'avatar' => $socialiteUser->getAvatar(),
+                    'password' => Hash::make(Str::random(32)),
+                ]);
+            } else {
+                $user->update([
+                    'google_id' => $socialiteUser->getId(),
+                    'avatar' => $socialiteUser->getAvatar(),
+                ]);
+            }
+
+            $token = $user->createToken('auth_token', ['*'], now()->addDays(7))->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login Google berhasil',
+                'token' => $token,
+                'user' => $user,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Google authentication failed: ' . $e->getMessage()], 401);
+        }
     }
 
     public function googleCallback()

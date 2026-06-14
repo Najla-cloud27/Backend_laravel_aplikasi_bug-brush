@@ -9,11 +9,20 @@ class ProgresController extends Controller
 {
     public function index()
     {
-        $progres = Progres::with('user')
-            ->where('user_id', request()->user()->id)
-            ->paginate(15);
+        $progres = Progres::where('user_id', request()->user()->id)
+            ->orderBy('tanggal', 'desc')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'judul' => 'Progres ' . $item->tanggal,
+                    'tanggal' => $item->tanggal,
+                    'total' => $item->total_fokus,
+                    'selesai' => $item->total_tugas_selesai,
+                ];
+            });
 
-        return response()->json($progres);
+        return response()->json(['data' => $progres]);
     }
 
     public function store(Request $request)
