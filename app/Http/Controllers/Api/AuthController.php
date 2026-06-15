@@ -11,6 +11,29 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    private function formatAvatarUrl(?string $avatar): ?string
+    {
+        if (!$avatar) {
+            return null;
+        }
+
+        if (str_starts_with($avatar, 'http://') || str_starts_with($avatar, 'https://')) {
+            return $avatar;
+        }
+
+        return asset('storage/' . $avatar);
+    }
+
+    private function userResponse(User $user): array
+    {
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $this->formatAvatarUrl($user->avatar),
+        ];
+    }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -30,7 +53,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Register berhasil',
             'token' => $token,
-            'user' => $user
+            'user' => $this->userResponse($user),
         ]);
     }
 
@@ -54,20 +77,15 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login berhasil',
             'token' => $token,
-            'user' => $user
+            'user' => $this->userResponse($user),
         ]);
     }
 
     public function showProfile(Request $request)
     {
-        $user = $request->user();
-
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'avatar' => $user->avatar,
-        ]);
+        return response()->json(
+            $this->userResponse($request->user())
+        );
     }
 
     public function updateProfile(Request $request)
@@ -87,14 +105,9 @@ class AuthController extends Controller
 
         $user->update($data);
 
-        $avatarUrl = $user->avatar ? asset('storage/' . $user->avatar) : null;
-
-        return response()->json([
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'avatar' => $avatarUrl,
-        ]);
+        return response()->json(
+            $this->userResponse($user)
+        );
     }
 
     public function logout(Request $request)
@@ -148,7 +161,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Login Google berhasil',
                 'token' => $token,
-                'user' => $user,
+                'user' => $this->userResponse($user),
             ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Google authentication failed: ' . $e->getMessage()], 401);
@@ -191,7 +204,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Login Google berhasil',
                 'token' => $token,
-                'user' => $user
+                'user' => $this->userResponse($user),
             ]);
         }
 
