@@ -97,7 +97,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnYakin && modalDownload) {
         btnYakin.addEventListener('click', function () {
             modalDownload.classList.remove('active');
-            window.location.href = downloadUrl;
+            var link = document.createElement('a');
+            link.href = downloadUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
     }
 
