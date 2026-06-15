@@ -1373,6 +1373,10 @@ img{
     cursor: pointer;
     background: var(--primary-blue);
     color: #fff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: background 0.2s;
 }
 .modal-actions .btn-yakin:hover {

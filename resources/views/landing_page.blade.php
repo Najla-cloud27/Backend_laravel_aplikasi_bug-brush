@@ -1291,6 +1291,10 @@
             cursor: pointer;
             background: var(--primary-blue);
             color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             transition: background 0.2s;
         }
         .modal-actions .btn-yakin:hover {
@@ -1353,7 +1357,7 @@
             <p>Apakah kamu yakin ingin mendownload aplikasi Fokusin?</p>
             <div class="modal-actions">
                 <button class="btn-batal" id="btnBatalDownload">Batal</button>
-                <button class="btn-yakin" id="btnYakinDownload">Yakin</button>
+                <a href="http://fokusin.najlahaura.my.id/fokusin.apk" target="_blank" class="btn-yakin" id="btnYakinDownload">Yakin</a>
             </div>
         </div>
     </div>
@@ -2013,7 +2017,6 @@
             var modalDownload = document.getElementById('modalDownload');
             var btnYakin = document.getElementById('btnYakinDownload');
             var btnBatal = document.getElementById('btnBatalDownload');
-            var downloadUrl = 'http://fokusin.najlahaura.my.id/fokusin.apk';
 
             if (btnDownload && modalDownload) {
                 btnDownload.addEventListener('click', function (e) {
@@ -2031,11 +2034,6 @@
             if (btnYakin && modalDownload) {
                 btnYakin.addEventListener('click', function () {
                     modalDownload.classList.remove('active');
-                    var link = document.createElement('a');
-                    link.href = downloadUrl;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
                 });
             }
 
