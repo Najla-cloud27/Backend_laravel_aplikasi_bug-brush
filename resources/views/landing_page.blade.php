@@ -1221,6 +1221,95 @@
                 font-size: 15px;
             }
         }
+        /* MODAL DOWNLOAD */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 36px 40px 28px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            transform: scale(0.92);
+            transition: transform 0.25s ease;
+        }
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+        .modal-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 16px;
+            background: #eef4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+        .modal-box h3 {
+            font-size: 20px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .modal-box p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .modal-actions .btn-yakin {
+            padding: 10px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--primary-blue);
+            color: #fff;
+            transition: background 0.2s;
+        }
+        .modal-actions .btn-yakin:hover {
+            background: #043d82;
+        }
+        .modal-actions .btn-batal {
+            padding: 10px 32px;
+            border: 1px solid #d0d5dd;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #fff;
+            color: var(--text-dark);
+            transition: background 0.2s;
+        }
+        .modal-actions .btn-batal:hover {
+            background: #f2f4f7;
+        }
     </style>
 </head>
 <body>
@@ -1253,6 +1342,21 @@
     </header>
 
     <div id="toast" class="toast"></div>
+
+    <!-- MODAL DOWNLOAD -->
+    <div class="modal-overlay" id="modalDownload">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0754B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <h3>Download Aplikasi</h3>
+            <p>Apakah kamu yakin ingin mendownload aplikasi Fokusin?</p>
+            <div class="modal-actions">
+                <button class="btn-batal" id="btnBatalDownload">Batal</button>
+                <button class="btn-yakin" id="btnYakinDownload">Yakin</button>
+            </div>
+        </div>
+    </div>
 
     <main id="app">
         <div id="page-beranda" class="page active">
@@ -1903,6 +2007,49 @@
                     }
                 }, 50);
             });
+
+            /* MODAL DOWNLOAD */
+            var btnDownload = document.getElementById('btnDownload');
+            var modalDownload = document.getElementById('modalDownload');
+            var btnYakin = document.getElementById('btnYakinDownload');
+            var btnBatal = document.getElementById('btnBatalDownload');
+
+            var APK_DOWNLOAD_URL = '{{ asset('apk/app-release.apk') }}';
+
+            if (btnDownload && modalDownload) {
+                btnDownload.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    modalDownload.classList.add('active');
+                });
+            }
+
+            if (btnBatal && modalDownload) {
+                btnBatal.addEventListener('click', function () {
+                    modalDownload.classList.remove('active');
+                });
+            }
+
+            if (btnYakin && modalDownload) {
+                btnYakin.addEventListener('click', function () {
+                    modalDownload.classList.remove('active');
+                    if (APK_DOWNLOAD_URL) {
+                        var a = document.createElement('a');
+                        a.href = APK_DOWNLOAD_URL;
+                        a.download = '';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                });
+            }
+
+            if (modalDownload) {
+                modalDownload.addEventListener('click', function (e) {
+                    if (e.target === modalDownload) {
+                        modalDownload.classList.remove('active');
+                    }
+                });
+            }
 
             if (window.location.search.includes('token=')) {
                 handleGoogleCallback();

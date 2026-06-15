@@ -74,6 +74,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initRevealAnimations();
 
+    /* MODAL DOWNLOAD */
+    var btnDownload = document.getElementById('btnDownload');
+    var modalDownload = document.getElementById('modalDownload');
+    var btnYakin = document.getElementById('btnYakinDownload');
+    var btnBatal = document.getElementById('btnBatalDownload');
+
+    var APK_DOWNLOAD_URL = '/apk/app-release.apk';
+
+    if (btnDownload && modalDownload) {
+        btnDownload.addEventListener('click', function (e) {
+            e.preventDefault();
+            modalDownload.classList.add('active');
+        });
+    }
+
+    if (btnBatal && modalDownload) {
+        btnBatal.addEventListener('click', function () {
+            modalDownload.classList.remove('active');
+        });
+    }
+
+    if (btnYakin && modalDownload) {
+        btnYakin.addEventListener('click', function () {
+            modalDownload.classList.remove('active');
+            if (APK_DOWNLOAD_URL) {
+                var a = document.createElement('a');
+                a.href = APK_DOWNLOAD_URL;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
+    }
+
+    if (modalDownload) {
+        modalDownload.addEventListener('click', function (e) {
+            if (e.target === modalDownload) {
+                modalDownload.classList.remove('active');
+            }
+        });
+    }
+
     var origHashChange = window.onhashchange;
     window.addEventListener('hashchange', function () {
         setTimeout(function () {
