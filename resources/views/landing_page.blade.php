@@ -964,12 +964,37 @@
             margin-bottom: 16px;
         }
 
+        .avatar-wrapper {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
         .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
             background: var(--primary-blue);
+        }
+        .avatar-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .avatar-wrapper:hover .avatar-overlay {
+            opacity: 1;
+        }
+        .avatar-overlay svg {
+            width: 18px;
+            height: 18px;
         }
 
         .user-name {
@@ -1462,7 +1487,13 @@
                     </nav>
                     <div class="sidebar-footer">
                         <div class="sidebar-user" id="sidebarUser">
-                            <img src="{{ asset('image/logoframe.png') }}" alt="Avatar" class="user-avatar" id="userAvatar">
+                            <div class="avatar-wrapper" id="avatarWrapper">
+                                <img src="{{ asset('image/logoframe.png') }}" alt="Avatar" class="user-avatar" id="userAvatar">
+                                <div class="avatar-overlay">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                </div>
+                            </div>
+                            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" style="display:none">
                             <div>
                                 <p class="user-name" id="userName">User</p>
                                 <p class="user-email" id="userEmail">user@email.com</p>
@@ -1729,6 +1760,50 @@
             if (user.avatar) {
                 document.getElementById('userAvatar').src = user.avatar;
             }
+            initAvatarUpload();
+        }
+
+        function initAvatarUpload() {
+            var wrapper = document.getElementById('avatarWrapper');
+            var input = document.getElementById('avatarInput');
+            if (!wrapper || !input) return;
+
+            wrapper.addEventListener('click', function () {
+                input.click();
+            });
+
+            input.addEventListener('change', async function () {
+                if (!input.files || !input.files[0]) return;
+
+                var file = input.files[0];
+                var maxSize = 2 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    showToast('Ukuran foto maksimal 2MB', 'error');
+                    input.value = '';
+                    return;
+                }
+
+                var formData = new FormData();
+                formData.append('name', document.getElementById('userName').textContent || 'User');
+                formData.append('avatar', file);
+
+                try {
+                    var res = await api.post('/user/update', formData);
+                    var user = getStoredUser();
+                    user.avatar = res.data.avatar;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    document.getElementById('userAvatar').src = res.data.avatar;
+                    showToast('Foto profil berhasil diubah', 'success');
+                } catch (err) {
+                    var msg = 'Gagal mengupload foto';
+                    if (err.response && err.response.data && err.response.data.message) {
+                        msg = err.response.data.message;
+                    }
+                    showToast(msg, 'error');
+                }
+
+                input.value = '';
+            });
         }
 
         function showToast(message, type) {

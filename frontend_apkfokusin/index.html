@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fokusin - Atur Waktu, Tingkatkan Fokus</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/image/fokus_selese.png" type="favicon">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+
+     <div class="bg-decoration">
+        <div class="blob blob-blue"></div>
+        <div class="blob blob-yellow"></div>
+    </div>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#/beranda" class="logo">
+                <span class="logo-f">F</span>
+                <img src="/image/logoframe.png" alt="Logo Icon" class="logo-icon">
+                <span class="logo-text">KUSIN</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#beranda" class="active" data-nav>Beranda</a></li>
+                <li><a href="#fitur" data-nav>Fitur</a></li>
+                <li><a href="#cara-kerja" data-nav>Cara Kerja</a></li>
+            </ul>
+            
+            <a href="#" class="btn-download" id="btnDownload" download>Download App</a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div id="toast" class="toast"></div>
+
+    <main id="app">
+        <!-- LANDING PAGE -->
+        <div id="page-beranda" class="page active">
+            <section id="beranda" class="hero">
+                <div class="container hero-container">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            Atur Waktu,<br>
+                            <span class="text-yellow">Tingkatkan Fokus,</span><br>
+                            Raih Tujuanmu
+                            <div class="title-underline"></div>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Fokusin adalah aplikasi manajemen waktu yang membantumu tetap terorganisir, fokus, dalam produktif setiap hari
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#/login" class="btn-primary" data-nav>Mulai Sekarang</a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="/image/logo.png" alt="Fokusin App Mockup" class="phone-mockup">
+                    </div>
+                </div>
+            </section>
+
+            <section id="fitur" class="features">
+                <div class="container">
+                    <h2 class="section-title">Fitur Utama <span class="logo-inline">F<img src="/image/logoframe.png" alt="">KUSIN</span></h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <img src="/image/pomodoro.png" alt="Pomodoro Icon">
+                            </div>
+                            <h3>Pomodoro</h3>
+                            <p>Atur waktu belajar dan tingkatkan fokus dengan teknik Pomodoro yang efektif.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <img src="/image/todolist.png" alt="To Do List Icon">
+                            </div>
+                            <h3>To Do List</h3>
+                            <p>Buat daftar tugas harian dan selesaikan dengan lebih mudah.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon-wrapper">
+                                <img src="/image/motivasi.png" alt="Motivasi Icon">
+                            </div>
+                            <h3>Motivasi</h3>
+                            <p>Dapatkan motivasi harian dan tetap semangat dalam mencapai tujuan.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="cara-kerja" class="how-it-works">
+                <div class="container">
+                    <h2 class="section-title">Cara Kerja <span class="logo-inline">F<img src="/image/logoframe.png" alt="">KUSIN</span></h2>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-illustration">
+                                <img src="/image/icon_tugas.png" alt="Buat Tugas Illustration">
+                            </div>
+                            <h3>Buat Tugas</h3>
+                            <p class="step-description">Tambahkan tugas yang ingin kamu kerjakan setiap hari</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-illustration">
+                                <img src="/image/pengingat.png" alt="Atur Pengingat Illustration">
+                            </div>
+                            <h3>Atur Pengingat</h3>
+                            <p class="step-description">Tentukan waktu dan dapatkan pengingat tepat waktu</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-illustration">
+                                <img src="/image/fokus_selese.png" alt="Fokus & Selesai Illustration">
+                            </div>
+                            <h3>Fokus & Selesai</h3>
+                            <p class="step-description">Fokus pada tugasmu dan raih tujuanmu setiap hari</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="container footer-container">
+                    <div class="footer-info">
+                        <div class="logo">
+                            <span class="logo-f">F</span>
+                            <img src="/image/logoframe.png" alt="Logo Icon" class="logo-icon">
+                            <span class="logo-text">KUSIN</span>
+                        </div>
+                        <p>Aplikasi manajemen waktu untuk membantumu tetap fokus, terorganisir, dan produktif setiap hari.</p>
+                    </div>
+                    <div class="footer-links-group">
+                        <div class="footer-col">
+                            <h4>Navigasi</h4>
+                            <ul>
+                                <li><a href="#beranda">Beranda</a></li>
+                                <li><a href="#fitur">Fitur</a></li>
+                                <li><a href="#cara-kerja">Cara Kerja</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-col">
+                            <h4>Fitur</h4>
+                            <ul>
+                                <li><a href="#/login">Pomodoro</a></li>
+                                <li><a href="#/login">To do List</a></li>
+                                <li><a href="#/login">Motivasi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Fokusin. All rights reserved.</p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- LOGIN PAGE -->
+        <div id="page-login" class="page">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo">
+                            <span class="logo-f">F</span>
+                            <img src="/image/logoframe.png" alt="Logo" class="logo-icon">
+                            <span class="logo-text">KUSIN</span>
+                        </div>
+                        <h2>Selamat Datang</h2>
+                        <p>Masuk untuk melanjutkan</p>
+                    </div>
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" placeholder="Masukkan email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" placeholder="Masukkan password" required>
+                        </div>
+                        <button type="submit" class="btn-auth-submit" id="loginBtn">
+                            <span class="btn-text">Masuk</span>
+                            <span class="btn-loader" style="display:none">Memproses...</span>
+                        </button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>atau</span>
+                    </div>
+                    <button class="btn-google" id="googleLoginBtn">
+                        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.87 7.35 2.56 10.56l7.97-5.97z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.97C6.51 42.62 14.62 48 24 48z"/></svg>
+                        Masuk dengan Google
+                    </button>
+                    <p class="auth-footer-text">
+                        Belum punya akun? <a href="#/register" data-nav>Daftar</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGISTER PAGE -->
+        <div id="page-register" class="page">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo">
+                            <span class="logo-f">F</span>
+                            <img src="/image/logoframe.png" alt="Logo" class="logo-icon">
+                            <span class="logo-text">KUSIN</span>
+                        </div>
+                        <h2>Buat Akun</h2>
+                        <p>Daftar untuk memulai</p>
+                    </div>
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="regName">Nama</label>
+                            <input type="text" id="regName" placeholder="Masukkan nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" id="regEmail" placeholder="Masukkan email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" placeholder="Minimal 8 karakter" required>
+                        </div>
+                        <button type="submit" class="btn-auth-submit" id="registerBtn">
+                            <span class="btn-text">Daftar</span>
+                            <span class="btn-loader" style="display:none">Memproses...</span>
+                        </button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>atau</span>
+                    </div>
+                    <button class="btn-google" id="googleRegisterBtn">
+                        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59A14.5 14.5 0 0 1 9.5 24c0-1.59.28-3.14.76-4.59l-7.98-6.19A23.99 23.99 0 0 0 0 24c0 3.77.87 7.35 2.56 10.56l7.97-5.97z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 5.97C6.51 42.62 14.62 48 24 48z"/></svg>
+                        Daftar dengan Google
+                    </button>
+                    <p class="auth-footer-text">
+                        Sudah punya akun? <a href="#/login" data-nav>Masuk</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD PAGE -->
+        <div id="page-dashboard" class="page">
+            <div class="dashboard-container">
+                <div class="dashboard-sidebar">
+                    <div class="sidebar-header">
+                        <div class="auth-logo">
+                            <span class="logo-f">F</span>
+                            <img src="/image/logoframe.png" alt="Logo" class="logo-icon">
+                            <span class="logo-text">KUSIN</span>
+                        </div>
+                    </div>
+                    <nav class="sidebar-nav">
+                        <a href="#/dashboard" class="sidebar-link active" data-nav>
+                            <span>&#9679;</span> Beranda
+                        </a>
+                        <a href="#/dashboard/tugas" class="sidebar-link" data-nav>
+                            <span>&#9679;</span> Tugas
+                        </a>
+                        <a href="#/dashboard/fokus" class="sidebar-link" data-nav>
+                            <span>&#9679;</span> Fokus
+                        </a>
+                        <a href="#/dashboard/progres" class="sidebar-link" data-nav>
+                            <span>&#9679;</span> Progres
+                        </a>
+                        <a href="#/dashboard/kutipan" class="sidebar-link" data-nav>
+                            <span>&#9679;</span> Kutipan
+                        </a>
+                    </nav>
+                    <div class="sidebar-footer">
+                        <div class="sidebar-user" id="sidebarUser">
+                            <div class="avatar-wrapper" id="avatarWrapper">
+                                <img src="/image/logoframe.png" alt="Avatar" class="user-avatar" id="userAvatar">
+                                <div class="avatar-overlay">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                </div>
+                            </div>
+                            <input type="file" id="avatarInput" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" style="display:none">
+                            <div>
+                                <p class="user-name" id="userName">User</p>
+                                <p class="user-email" id="userEmail">user@email.com</p>
+                            </div>
+                        </div>
+                        <button class="btn-logout" id="logoutBtn">Keluar</button>
+                    </div>
+                </div>
+                <div class="dashboard-main">
+                    <div id="dashboardContent">
+                        <div class="dashboard-welcome">
+                            <h1>Halo, <span id="dashboardUserName">User</span>!</h1>
+                            <p>Selamat datang di Fokusin. Mulai atur waktumu dan tingkatkan produktivitas!</p>
+                        </div>
+                        <div class="dashboard-stats">
+                            <div class="stat-card">
+                                <h3>Total Tugas</h3>
+                                <p class="stat-number" id="statTugas">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Selesai</h3>
+                                <p class="stat-number" id="statSelesai">0</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Fokus Hari Ini</h3>
+                                <p class="stat-number" id="statFokus">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/router.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
