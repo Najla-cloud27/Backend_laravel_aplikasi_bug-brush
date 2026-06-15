@@ -79,8 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var modalDownload = document.getElementById('modalDownload');
     var btnYakin = document.getElementById('btnYakinDownload');
     var btnBatal = document.getElementById('btnBatalDownload');
-
-    var APK_DOWNLOAD_URL = '/apk/app-release.apk';
+    var downloadUrl = 'http://fokusin.najlahaura.my.id/fokusin.apk';
 
     if (btnDownload && modalDownload) {
         btnDownload.addEventListener('click', function (e) {
@@ -98,14 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnYakin && modalDownload) {
         btnYakin.addEventListener('click', function () {
             modalDownload.classList.remove('active');
-            if (APK_DOWNLOAD_URL) {
-                var a = document.createElement('a');
-                a.href = APK_DOWNLOAD_URL;
-                a.download = '';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            }
+            window.location.href = downloadUrl;
         });
     }
 

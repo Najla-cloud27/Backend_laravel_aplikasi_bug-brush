@@ -1353,7 +1353,7 @@
             <p>Apakah kamu yakin ingin mendownload aplikasi Fokusin?</p>
             <div class="modal-actions">
                 <button class="btn-batal" id="btnBatalDownload">Batal</button>
-                <a href="http://fokusin.najlahaura.my.id/fokusin.apk" id="btnYakinDownload" download>Yakin</a>
+                <button class="btn-yakin" id="btnYakinDownload">Yakin</button>
             </div>
         </div>
     </div>
@@ -2013,8 +2013,7 @@
             var modalDownload = document.getElementById('modalDownload');
             var btnYakin = document.getElementById('btnYakinDownload');
             var btnBatal = document.getElementById('btnBatalDownload');
-
-            
+            var downloadUrl = 'http://fokusin.najlahaura.my.id/fokusin.apk';
 
             if (btnDownload && modalDownload) {
                 btnDownload.addEventListener('click', function (e) {
@@ -2032,14 +2031,7 @@
             if (btnYakin && modalDownload) {
                 btnYakin.addEventListener('click', function () {
                     modalDownload.classList.remove('active');
-                    if (APK_DOWNLOAD_URL) {
-                        var a = document.createElement('a');
-                        a.href = APK_DOWNLOAD_URL;
-                        a.download = '';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                    }
+                    window.location.href = downloadUrl;
                 });
             }
 
