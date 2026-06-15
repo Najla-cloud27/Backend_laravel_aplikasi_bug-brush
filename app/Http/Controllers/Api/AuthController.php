@@ -123,6 +123,7 @@ class AuthController extends Controller
     {
         /** @var \Laravel\Socialite\Two\GoogleProvider $provider */
         $provider = Socialite::driver('google');
+        $provider->redirectUrl(url('/api/auth/google/callback'));
 
         $url = $provider->stateless()->redirect()->getTargetUrl();
 
@@ -173,10 +174,16 @@ class AuthController extends Controller
         try {
             /** @var \Laravel\Socialite\Two\GoogleProvider $provider */
             $provider = Socialite::driver('google');
+            $provider->redirectUrl(url('/api/auth/google/callback'));
 
             $socialiteUser = $provider->stateless()->user();
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Google authentication failed'], 401);
+            $message = 'Google authentication gagal: ' . $e->getMessage();
+            if (request()->expectsJson() || request()->wantsJson()) {
+                return response()->json(['message' => $message], 401);
+            }
+            $frontendUrl = env('FRONTEND_URL', 'http://localhost:5173');
+            return redirect("$frontendUrl?error=" . urlencode($message));
         }
 
         $user = User::where('email', $socialiteUser->getEmail())->first();
