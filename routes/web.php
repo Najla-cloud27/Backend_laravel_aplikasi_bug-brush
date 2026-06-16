@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/download-apk', function () {
-    $path = public_path('apk/app-release.apk');
+    $path = public_path('apk/fokusin.apk');
 
     if (file_exists($path)) {
         return response()->download($path, 'fokusin.apk', [
