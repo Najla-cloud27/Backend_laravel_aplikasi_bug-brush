@@ -15,5 +15,5 @@ Route::get('/download-apk', function () {
         ]);
     }
 
-    return redirect('http://fokusin.najlahaura.my.id/fokusin.apk');
+    return redirect('http://fokusin.najlahaura.my.id/apk/fokusin.apk');
 });
