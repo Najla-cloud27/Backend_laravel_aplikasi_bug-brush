@@ -7,7 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/download-apk', function () {
-    $path = public_path('apk/fokusin.apk');
+    $path = public_path('fokusin.apk');
 
     if (file_exists($path)) {
         return response()->download($path, 'fokusin.apk', [
@@ -15,5 +15,5 @@ Route::get('/download-apk', function () {
         ]);
     }
 
-    return redirect('https://fokusin.najlahaura.my.id/apk/fokusin.apk');
+    return redirect('https://fokusin.najlahaura.my.id/fokusin.apk');
 });

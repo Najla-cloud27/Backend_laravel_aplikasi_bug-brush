@@ -1357,7 +1357,7 @@
             <p>Apakah kamu yakin ingin mendownload aplikasi Fokusin?</p>
             <div class="modal-actions">
                 <button class="btn-batal" id="btnBatalDownload">Batal</button>
-                <a href="{{ asset('apk/fokusin.apk') }}" class="btn-yakin" id="btnYakinDownload">Yakin</a>
+                <a href="{{ asset('fokusin.apk') }}" class="btn-yakin" id="btnYakinDownload">Yakin</a>
             </div>
         </div>
     </div>
